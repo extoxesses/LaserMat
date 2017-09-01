@@ -1,0 +1,9 @@
+*~
+*.bmp
+*.fig
+*.mat
+*.asv
+mm/
+test/
+resources/
+sagoma/
