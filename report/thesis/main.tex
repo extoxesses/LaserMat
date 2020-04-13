@@ -1,0 +1,105 @@
+\documentclass[a4paper, 12pt, twoside, openright]{report}
+\usepackage[utf8]{inputenc}
+\usepackage[italian,english]{babel}
+
+% Metadata packages
+\usepackage{datetime}
+\usepackage{ifpdf}
+\ifpdf
+\pdfinfo{
+   /Author (Alex Badan)
+   /Title (Estimate of an uncertainty of a laser-camera triangulation measurement systems. Development of a model and evaluation on a profile measurement system and diameter for railway wheels)
+   /Keywords (modelling; laser triangulation; wheel profile measurement system:)
+   /CreationDate (D:\pdfdate)
+}
+\fi
+
+% --- Text Layout packages
+\usepackage{multicol}
+\usepackage{subcaption}
+% Following lines are needed to move page number and section title on the page header
+\usepackage{fancyhdr}
+  \pagestyle{fancy}
+  \fancyhf{}
+  \fancyhead[L]{\rightmark}
+  \fancyhead[R]{\thepage}
+  \renewcommand{\headrulewidth}{0pt}
+\usepackage[nottoc]{tocbibind} % numbibx
+
+% --- Images management packages
+\usepackage{graphics, amsfonts}
+\usepackage[pdftex]{graphicx}
+\usepackage{wrapfig}
+\usepackage{wallpaper} % This is needed for image in background in the alternative title page
+
+% --- Tables management packages
+\usepackage{longtable}
+\usepackage{booktabs}
+\usepackage{multirow}
+% \usepackage[table,xcdraw]{xcolor}
+
+% --- Math utils packages
+\usepackage{amssymb} % N
+\usepackage{amsmath} % matrix
+\usepackage{dsfont}
+\usepackage{gensymb} % to use \degree in math mode for the ° symbol
+
+% --- Text components packages
+\usepackage[final]{pdfpages}
+\usepackage{acronym}
+\usepackage[sort,compress]{cite}
+\usepackage[titletoc]{appendix}
+% \usepackage[toc,page]{appendix} % to add a page before appendixes
+\usepackage{hyperref}
+  \hypersetup{ colorlinks=false, pdfborder = {0 0 0}, }
+
+\begin{document}  
+  \includepdf[pages=-]{./src/0_titlepage.pdf}
+  \pagenumbering{gobble}
+  \input{./src/1_abstract.tex}
+  
+  \clearpage \pagenumbering{roman}
+  \tableofcontents
+  
+  %%% Sections out of table of contents
+  % \addtocontents{toc}{\edef\protect\SavedTocDepth{\protect\the\protect\value{tocdepth}}}
+  % \addtocontents{toc}{\protect\setcounter{tocdepth}{-10}}
+  \listoffigures
+  \listoftables
+  % \addtocontents{toc}{\protect\setcounter{tocdepth}{\protect\SavedTocDepth}}
+  
+  \cleardoublepage
+  \chapter*{List of acronyms}
+  \addcontentsline{toc}{chapter}{List of acronyms}
+  \input{./src/miscellaneous/acronimi.tex}
+  % \clearpage
+  
+  
+  %%% Sections in the table of contents
+  \input{./src/2_introduction.tex}
+
+  % \input{./src/3_structure.tex}
+  \input{./src/chapters/ch2-Technology.tex}		% Originally ch2
+  \input{./src/chapters/ch3-sys_cmps.tex}	    % Originally ch1
+  \input{./src/chapters/ch4-Model.tex}			% Chapter 3
+  \input{./src/chapters/ch5_model_analysis.tex}	% Chapter 4
+  \input{./src/chapters/ch6_diameter.tex}		% Chapter 5
+  
+  \input{./src/4_conclusion.tex}
+  
+  \begin{appendices}
+    \input{./src/appendexes/model.tex}
+    \input{./src/appendexes/nomen.tex}
+  \end{appendices}
+  
+  % \input{./src/miscellaneous/acronimi.tex}
+  
+  % Bibliography
+  \bibliography{./src/biblio/biblio,./src/biblio/nocite}
+  \bibliographystyle{plain} % IEEEtranN, plain, unsrt
+  \nocite{*}
+  
+  \cleardoublepage
+  \pagenumbering{gobble}
+  \input{./src/miscellaneous/acknowledgements.tex}
+\end{document}

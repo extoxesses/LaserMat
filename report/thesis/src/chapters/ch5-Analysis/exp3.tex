@@ -1,0 +1,42 @@
+\section{Validation of the model}
+For the last set of tests, we returned over the initial optical bench. In this case, we wanted to compare the output of the model with the resolution of the camera, in order to understand if the precision of the measures we can make, is inferiorly limited by camera resolution, or if it is influenced also by some other factors. \\
+To reach our goal, we decided to modify the bench a bit: we used a less distorted lens (the one used in the Section \ref{sec:exp1} introduced too much tangential distortion), and we changed the laser to a similar one to that used in Section \ref{sec:exp2}, less noisy and thick than the initial one (configuration in Table \ref{tab:conf3}). Thus, we calibrate the system again, using the company's software. At this point, we performed two different test:
+ \begin{itemize}
+   \item First, we repeated the experiments in Section \ref{sec:exp1}, using the same known target object.
+   \item Second, we empirically evaluated the resolution of the camera, and compared the results with both the nominal value of the camera, and the results obtained in the first point.
+ \end{itemize}
+ \input{./src/chapters/ch5-Analysis/tab-conf3.tex}
+
+% --------- %
+\subsection{Model validation}
+In the first phase, the experiments were performed as described in Section \ref{sec:exp1}, but now we have limited the propagation of the errors to the single points, rather than proceeding with the measurements as before. Thus, we put the target in three know position: at the beginning, in the middle and at the end of the \acs{FOV}. This allowed us to cover the entire \acs{FOV} of the camera. In Table \ref{tab:exp3-res} we reported the obtained results. As before, the values are the means of the propagate error for each point over the same sub-filter. We repeated our analysis twice because, as we can see, in the first test, the target was taken in wrong positions. However, we reported all the results better to find some correlations with the results discussed in the next subsection. \\
+  \input{src/chapters/ch5-Analysis/tab-exp3-res.tex}
+For the moment, the only consideration that we can make is the comparison with the results in Section \ref{sec:exp1}: the use of a less distorted lens, and the use of a better laser reduced significantly the theoretical error that we can commit.
+
+% --------- %
+\subsection{Camera resolution}
+In the second phase, we decided to integrate our library with a method that allowed us to evaluate the resolution of the camera. To do that, we put the step motor, used to calibrate the system, parallel with the optical axis; in this way the reference object (used to create the grid of points required by Tsai) is perpendicular with the camera. In this case we are not interested in determining the edges of the object, but only to acquire a horizontal laser line. So, we saved six frames: two at the beginning of the \acs{FOV}, two in the middle, and two at the end; in each pair of the acquisitions, the laser lines are $5 \, mm$ apart. This value was chosen arbitrarily to appreciate the distance to the naked eye, and to be able to control the displacement between one position and the other with a tape measure. In Figure \ref{fig:line-pos} are shown the three positions of the target, with respect of the \acs{FOV} of the camera.
+  \begin{figure}[!b]
+    \centering
+    \begin{minipage}[c]{.32\textwidth}
+      \centering
+      \includegraphics[width=\textwidth]{./images/analysis/exp3/250.jpg}
+    \end{minipage}
+    \hfill
+    \begin{minipage}[c]{.32\textwidth}
+      \centering
+      \includegraphics[width=\textwidth]{./images/analysis/exp3/380.jpg}
+    \end{minipage}
+    \hfill
+    \begin{minipage}[c]{.32\textwidth}
+      \centering
+      \includegraphics[width=\textwidth]{./images/analysis/exp3/510.jpg}
+    \end{minipage}
+    
+    \caption{Positions of the target along the \acs{FOV} of the camera}
+    \label{fig:line-pos}
+  \end{figure}
+In Table \ref{tab:exp3:res2} we reported our results: the first two columns are, respectively, the distances and the errors between the pairs of laser lines, while the third column contains the resolution of the camera, evaluated in the three position cited above. As we can see, the filters did not change resolutions substantially, so we can conclude that the resolution of our camera was in the range $\left( 0.27, 0.55 \right) \, mm/pix$. \\
+  \input{src/chapters/ch5-Analysis/tab-exp3-res2.tex}
+
+If we compare the values in Table \ref{tab:exp3-res} with the ones in Table \ref{tab:exp3:res2}, it is clear that the target wasn't acquired in the same positions, but despite that, we can say that the values are the same. From our point of view, this was an interesting result: if on the one hand, it has further validated the model, determining a physical lower bound that we have reached, on the other it confirmed what we said in Section \ref{sec:exp2} about the ``sensitive points'' of the model. In our case, the performances of the hardware were good enough to make the software's effects on the final results negligible. As we have already said, the smaller the pixel size is, the smaller the gain done by the filters.

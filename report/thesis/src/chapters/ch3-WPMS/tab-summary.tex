@@ -1,0 +1,53 @@
+% \caption{Summery of the systems above.}
+% \label{tab:wpms:summaries}
+
+\begin{table}[t!]
+\footnotesize
+\centering
+\begin{tabular}{|l|p{4cm}|p{4cm}|l|}
+
+\hline
+\multicolumn{1}{|c|}{\textbf{\#}} & \multicolumn{1}{c|}{\textbf{Preprocessing}} & \multicolumn{1}{c|}{\textbf{Diameter}} & \multicolumn{1}{c|}{\textbf{Precision}} \\
+
+\hline
+\textit{1}  & * image resizing;                                                  & Profile radial                                                               & Higher than $96\%$  \\
+            & * laser spots detection;                                           & compensation and                                                             &                     \\
+            & * image equalization;                                              & approximation of the                                                         &                     \\
+            & * rejection of noisy points.                                       & wheel to a cylinder                                                          &                     \\
+			&                                                                    & instead of a cone.                                                           &                     \\
+			&                                                                    &                                                                              &                     \\
+			
+\hline
+\textit{2}  & * profiles extraction and                                          & Estimation of the center                                                     & $0.2 \, mm$ for measures \\
+            & conversion in a common reference system;                           & of the wheel and computation of the radius for each                          & $1.0 \, mm$ for radius   \\
+            & * profiles radial correction;                                      & rolling point. Application of a Gauss-Newton                                 &                          \\
+            & * profiles merge.                                                  & algorithm to reduce the approximation error.                                 &                          \\
+            &                                                                    &                                                                              &                          \\
+
+\hline
+\textit{3}  & * detection of the laser                                           & Standard circle fitting                                                      & $0.1 \, mm$ for measures \\
+            & stripe;                                                            & algorithm                                                                    & $1.0 \, mm$ for radius   \\
+            & * data conversion into the 3D reference system;                    &                                                                              &                          \\
+            & * alignment to the ideal orientation;                              &                                                                              &                          \\
+            & * data interpolation using shape fitting algorithms.               &                                                                              &                          \\
+            &                                                                    &                                                                              &                          \\
+
+\hline
+\textit{4}  & * frame filtering;                                                 & Evaluation through                                                           & Not found           \\
+            & * profile extraction;                                              & rolling points                                                               &                     \\
+            & * conversion into 3D reference system;                             &                                                                              &                     \\
+            & * profiles merge;                                                  &                                                                              &                     \\
+            & * performing of radial compensation to the profile.                &                                                                              &                     \\
+            &                                                                    &                                                                              &                     \\
+
+\hline
+\textit{5}  & * Profile extraction using edge detector algorithms.               & * Alignment of the profile to the reference system;                      & Not found               \\
+            &                                                                    & * fitting of the wheel rim plane;                                        &                         \\
+            &                                                                    & * projection of the flange on the plane;                                 &                         \\
+            &                                                                    & * use of a maximum likelihood algorithm to reduce the error.             &                         \\
+\hline
+\end{tabular}
+
+\caption{Summery of the systems above.}
+\label{tab:wpms:summaries}
+\end{table}

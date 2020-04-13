@@ -5,6 +5,8 @@ This collection of methods was used during the master thesis in computer enginee
 
 Badan, A. (2017). *Measurement system for profile and diameter of railway wheels. Estimate of an accuracy of laser-camera triangulation sensors*
 
+__ATTENTION__: this repository is no longer mantained. Missing images and library components have been lost. I'm sorry for the inconvinient.
+
 ### Main packages
 | Package | Description |
 | ------- | ----------- |

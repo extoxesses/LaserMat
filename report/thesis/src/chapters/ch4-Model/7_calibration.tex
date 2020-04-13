@@ -1,0 +1,42 @@
+\section{The effects of camera calibration}
+\label{sec:calib-model}
+% Original: Error propagation in calibration parameters
+
+During the description of our model, in many cases we considered the contribution of some parameters as null, such as focal length, principal point and distortion coefficients. In Section \ref{sec:teo-calibration}, we briefly discussed about two algorithms that can be used in our scenarios. Like any other calibration algorithm, the two proposed determine the parameters of the camera using some heuristics that could introduce some evaluation errors. Therefore, at the end of our analysis, we wonder if it is necessary to introduce the effects of camera calibration into the model. \\
+
+Focusing on Tsai, we found several researches that aim to reach our same goal: 
+\cite{Brauer2017}
+\cite{fujimoto-teo-err-an}
+\cite{7153104}
+\cite{Kopparapu:2001:ENC:569876.569877}
+\cite{SALVI20021617}
+\cite{Samper2013}
+\cite{4129503} and 
+\cite{159901}.
+We grouped these references into two different sets: in the first one we put articles that use a more empirical approach, while in the second the most theoretical one. \\
+
+The articles grouped into the ``empirical set'' try to improve the accuracy assessment originally proposed by Tsai in \cite{TsaiTvLenses}. What he suggested were three type of measures, described bellow:
+  \begin{itemize}
+    \item \textit{Type I} \\
+          This type of measures evaluate the accuracy of the calibrated parameters comparing the (theoretic) known 3D points with a the set of 3D points obtained by converting the 2D input grid, using the calibrated parameters themselves. In this way we can realize a statistic on the committed error. An example of this type of measures is the \textit{Normalized Calibration Error} (\acs{NCE})\cite{159901}. Let $p = (x_i, y_i, z_i)$ be the true 3D coordinates of the point $p$, $\hat{p} = (\hat{x}_i, \hat{y}_i, \hat{z}_i)$ be the reconstructed coordinates of $p$, and let $\left( f_u, f_v \right)$ the components of the focal length along the axis of our reference system, we can define the $NCE$ as:
+          \begin{equation*}
+            NCE = \frac{1}{n}\sum_{i=1}^n \sqrt{\frac{(\hat{x}_i - x_i)^2 + (\hat{y}_i - y_i)^2}{\hat{z}_i^2(f_u^{-2} + f_v^{-2})/12}}
+          \end{equation*}
+          
+    \item \textit{Type II} \\
+    These measures estimate the calibration error by evaluating the distance between two ray of light. As discussed in Section \ref{sec:pinhole_camera} the projection of a 3D point $P$ in the image plane is performed solving the intersection between this plane and a line that connects $P$ with the principal point $O$. In the reality, rays of light don't pass exactly from $O$. The difference from the theoretical and real lines form in the image plane is a circle of radius $r$. The statistics over $r$ allow to estimate the calibration error.
+    
+    \item \textit{Type III} \\
+Measures belonging to this set are similar to the ones of type I. However, unlike them, type III measures evaluate the calibration error by measuring a known target object, or performing dimensional measures.
+  \end{itemize}
+  
+We observed that all these errors are strongly related to the set-up used, and in particular to the working conditions. This means that several executions of the calibration process over several grids acquisitions, could change from each other, because of minimum changes in the working conditions. Thus, what we need is a model that allows to assess the quality of the calibration theoretically. If we could do this, we would have a complete view on the design of triangulation systems. Therefore, we focused on the second set, but also in this case we didn't find what we needed. The main issue in evaluating calibration processes is due by the non-linear optimizations that many calibration algorithm, like Tsai and Zhang, use. The problem is not the fact that the problem is non-linear, but the fact that this algorithms use heuristics based on statistics evaluated on the input points. Some studies developed mathematical models, but all of them are limited on a specific case, and can't be used in the general one. \\
+
+Another aspect that we have to consider is that all calibration algorithm uses different strategies to evaluate parameters of the camera: this means that each algorithm is based on a different mathematical model. All this implies that we should design a different error propagation model for each considered mathematical model. 
+We could consider the pinhole general model, shown in Equation \ref{eq:perspective_projection}. Accordingly with \cite{andersson2008calibration} it is possible to write the Equation \ref{eq:perspective_projection} as:
+  \begin{equation}
+    u = ID(EX)
+  \end{equation}
+where $E$ and $I$ are the extrinsic and intrinsic matrix respectively, and $D$ is a matrix that allows to consider the lens distortion, as described in \cite{DBLP:journals/corr/cs-CV-0308003}. From this point, the article continues describing a more general (and may be robust) algorithm for camera calibration but, in the end, we can consider this approach as the most general one. Even if all the proposal models tend to converge to this last one, we continue to remain perplexed about the possibility of generalize the calibration process. \\
+
+Therefore we concluded that an analysis of this type was too taxing for our purposes, and that this type of work may be superfluous \cite{5944307}. Thus, we decided to continue to consider the contribution of the camera parameters as zero.

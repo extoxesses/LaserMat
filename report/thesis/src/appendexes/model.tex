@@ -1,0 +1,267 @@
+\chapter{Description of the complete mathematical model}
+\label{ap:model}
+\textit{In this appendix we will analyse formally the proposed model, presented in Chapter \ref{ch::model}. Functions derivatives are trivial, so they will not be indicated except where otherwise indicated.}
+
+%--------------------------------------------%
+%--------------------------------------------%
+\section*{Error propagation along the y axis}
+Accordingly with the geometric model for \acs{SOL} systems, we can write:
+  \begin{equation}
+    \label{app:eq:triangulation}
+	y(\alpha) = y_f + z_f \tan(\phi + \alpha)
+  \end{equation}
+where $y(\alpha)$ is the point $y$ coordinate; $(x_f, y_f, z_f)$ are the principal point projection coordinates in the laser plane (both in the world reference system); $\phi$ is the triangulation angle and $\alpha$ is the angle offset along $y$ axis.
+Using the error propagation model for general non-trivial functions, the error is evaluated as follows:
+  \begin{equation*}
+    \sigma_{y_\alpha} = \sqrt{
+      \left( \frac{\partial y}{\partial y_f} \right)^2 \sigma_{y_f}^2
+      + \left( \frac{\partial y}{\partial z_f} \right)^2 \sigma_{z_f}^2
+      + \left( \frac{\partial y}{\partial \phi} \right)^2 \sigma_\phi^2
+      + \left( \frac{\partial y}{\partial \alpha} \right)^2 \sigma_\alpha^2
+    }
+  \end{equation*} \\
+
+If laser plane doesn't lie on the target section plane, a common practise is applied the so called ``\textit{radial compensation}'' to \ref{app:eq:triangulation} output:
+  \begin{equation*}
+    y_w = y(\alpha) \cdot cos(\rho)
+  \end{equation*}
+where $\rho$ is the angle between laser plane and object plane of symmetry.
+In this case the final error is:
+  \begin{equation}
+    \sigma_{y_w} = \sqrt{
+      \left( \frac{\partial y_w}{\partial y(\alpha)} \right)^2 \sigma_{y_\alpha}^2
+      + \left( \frac{\partial y_w}{\partial \rho} \right)^2 \sigma_\rho^2
+    }
+    \label{app:eq:sigma-yw}
+  \end{equation} \\
+
+A variation of $y_w$ in the world corresponds to a variation of $y_{s_i}$ in the image plane with an angle $\alpha_i$ according to the relation:
+  \begin{equation}
+    \label{app:eq:triang_angle}
+  	\alpha_i = \arctan\left( \frac{y_{s_i}}{f} \right)
+  \end{equation}
+where $y_{s_i}$ is the point coordinate in the tilted image plane, and $f$ is the focal length. The error propagation is computed as:
+  \begin{equation}
+  	\sigma_{\alpha_i} = \sqrt{
+  	  \left( \frac{\partial \alpha_i}{\partial y_{s_i}} \right)^2 \sigma_{y_{s_i}}^2
+  	  + \left( \frac{\partial \alpha_i}{\partial f} \right)^2 \sigma_f^2
+  	}
+    \label{app:eq:sigma-alpha}
+  \end{equation} \\
+
+As it is known, Scheimpflug principle causes tilting of the image plane. Accordingly with \cite{SchCameraCalib}, the relation between tilted coordinates and parallel coordinates to the sensor is given by:
+  \begin{equation}
+    \label{app:eq:sch_y}
+    y_{s_i} = \lambda_1 \frac{y_{p_i}}{\cos\upsilon} =
+    \frac{f}{f - x_{p_i}\tan\chi - y_{p_i}\frac{\tan\upsilon}{\cos\chi}} \frac{y_{p_i}}{ \cos\upsilon}
+  \end{equation}
+where $\upsilon$ is the tilt angle with respect to $y$ axis, and $\chi$ is the swing angle with respect to $x$ axis, either in the image plane coordinates system, parallel to the camera sensor. The constant $\lambda_1$ is function of $f$, $\upsilon$ and $\chi$, and of point coordinates in the last image plane $\left( x_p, y_p \right)$. The error propagation follows:
+  \begin{equation*}
+    \sigma_{y_{s_i}} = \sqrt{
+      \left( \frac{\partial y_{s_i}}{\partial y_{p_i}} \right)^2 \sigma_{y_{p_i}}^2 +
+      \left( \frac{\partial y_{s_i}}{\partial x_{p_i}} \right)^2 \sigma_{x_{p_i}}^2 +
+      \left( \frac{\partial y_{s_i}}{\partial \upsilon} \right)^2 \sigma_\upsilon^2 +
+      \left( \frac{\partial y_{s_i}}{\partial \chi} \right)^2 \sigma_\chi^2 +
+      \left( \frac{\partial y_{s_i}}{\partial f} \right)^2 \sigma_f^2
+    }
+  \end{equation*}
+In this case we indicate the partial derivatives for completeness: \\
+\begin{equation*}
+  \begin{array}{rl}
+    \frac{
+      \partial y_s}{\partial y_p} = &
+          \frac{f\cdot\sec\upsilon}{f -y_p\cdot\sec\chi\tan\upsilon - x_p\cdot\tan\chi} +
+          \frac{f\cdot y_p\cdot \sec\chi\tan\upsilon\sec\upsilon}{\left( f -y_p\cdot\sec\chi\tan\upsilon - x_p\cdot\tan\chi \right)^2} \\~\\
+      \frac{\partial y_s}{\partial x_p} = &
+          \frac{f\cdot y_p\cdot \tan\chi\sec\upsilon}{\left( f -y_p\cdot\sec\chi\tan\upsilon - x_p\cdot\tan\chi \right)^2} \\~\\
+      \frac{\partial y_s}{\partial \chi} = &
+          \frac{f\cdot y_p\cdot \sec\upsilon \left( -y_p\cdot \tan\chi\sec\chi\tan\upsilon - x_p\cdot\sec^2\chi \right)}{\left( f -y_p\cdot\sec\chi\tan\upsilon - x_p\cdot\tan\chi \right)^2} \\~\\
+      \frac{\partial y_s}{\partial \upsilon} = &
+          \frac{f\cdot y_p^2\cdot \sec\chi\sec^3\upsilon}{ \left( f -y_p\cdot\sec\chi\tan\upsilon - x_p\cdot\tan\chi \right)^2} +
+          \frac{f\cdot y_p\cdot \sec\upsilon\tan\upsilon}{f -y_p\cdot\sec\chi\tan\upsilon - x_p\cdot\tan\chi} \\~\\
+      \frac{\partial y_s}{\partial f} = &
+          \frac{f\cdot y_p\cdot \sec\upsilon}{ \left( f -y_p\cdot\sec\chi\tan\upsilon - x_p\cdot\tan\chi \right)^2} +
+          \frac{y_p\cdot \sec\upsilon}{f -y_p\cdot\sec\chi\tan\upsilon - x_p\cdot\tan\chi}
+  \end{array}
+\end{equation*} \\
+
+Developing this model, we took into account only the first order lens radial distortion:
+  \begin{equation}
+  	\label{app:eq:sensor_to_camera_distortion}
+    \begin{matrix}
+      y_{p_i} = y_{p_i}^{d} \left( 1 + k_1r^2 \right) \\~\\
+      \sigma_{y_{p_i}} = \sqrt{
+        \left( \frac{\partial y_{p_i}}{\partial y_{p_i}^d} \right)^2 \sigma_{y_{p_i}^d}^2
+        + \left( \frac{\partial y_{p_i}}{\partial k_1} \right)^2 \sigma_{k_1}^2
+      }
+    \end{matrix}
+  \end{equation}
+Where $y_{p_i}^d$ is the distorted coordinate in the sensor plane, $k_1$ is the lens radial distortion first order coefficient and $r$ is the lens radius, estimated in the worst case as $r = \frac{image \, size}{2}$. \\
+
+The distorted coordinate in sensor plane is evaluate accordingly with:
+  \begin{equation}
+      \label{app:eq:sensor_to_camera_center}
+      y_{p_i}^d = d'_y (y_{c_i} - c_y)
+  \end{equation}
+where $c_y$ is the $y$ coordinate of the center image, $d'_y$ is the normalized center to center distance between adjacent sensor elements, and $y_c$ is the point coordinate in pixel. Its error is computed as:
+  \begin{equation*}
+    \sigma_{y_{p_i}^d} = \sqrt{
+      \left( \frac{\partial y_{p_i}^d}{\partial y_{c_i}} \right)^2 \sigma_{y_{c_i}}^2
+      + \left( \frac{\partial y_{p_i}^d}{\partial c_y} \right)^2 \sigma_{c_y}^2
+    }
+  \end{equation*} \\
+
+At the end of the chain, the sub-pixel approximation error is evaluated as follows:
+  \begin{equation*}
+    \sigma_{y_{c_i}} = |\delta_i - \hat{\delta}_i|
+  \end{equation*}
+where $\delta_i$ is the real laser peak position inside the pixel, and $\hat{\delta}_i$ is the approximated peak position.
+
+%--------------------------------------------%
+%--------------------------------------------%
+\section*{Error propagation along the x axis}
+The analysis for error propagation along coordinate $x$ is similar to the previous one. For this reason, the parameters using the same notation won't be explained. \\
+
+The point $x$ coordinate is evaluated accordingly with the geometric model:
+  \begin{equation*}
+    x(\alpha, \beta) = \frac{y_\alpha - y_f}{\sin(\phi + \alpha)}\tan(\beta)
+  \end{equation*}
+where $\beta$ is the triangulation angle with respect to the $x$ axis. As in the previous case, we have to balance the laser pitch rotation:
+  \begin{equation*}
+    x_w = x(\alpha, \beta) \cdot \cos(\gamma)
+  \end{equation*}
+where $\gamma$ is the laser pith angle. So the error is:
+  \begin{equation}
+    \sigma_{x_w} = \sqrt{
+      \left( \frac{\partial x_w}{\partial y_\alpha} \right)^2 \sigma_{y_\alpha}^2 +
+      \left( \frac{\partial x_w}{\partial \phi} \right)^2 \sigma_\phi^2 +
+      \left( \frac{\partial x_w}{\partial \alpha} \right)^2 \sigma_\alpha^2 +
+      \left( \frac{\partial x_w}{\partial \beta} \right)^2 \sigma_\beta^2 +
+      \left( \frac{\partial x_w}{\partial \gamma} \right)^2 \sigma_\gamma^2
+    }
+    \label{app:eq:sigma-xw}
+  \end{equation}
+For clarity, we provide the partial derivatives below:
+  \begin{equation*}
+    \begin{array}{rl}
+      \frac{\partial x_c}{\partial y} = & \tan\beta\sec\gamma\csc(\phi + \alpha) \\~\\
+      \frac{\partial x_c}{\partial \phi} = & -y\cdot\tan\beta\cot(\phi + \alpha)\csc(\phi + \alpha) \\~\\
+      \frac{\partial x_c}{\partial \alpha} = & -y\cdot\tan\beta\sec\gamma\cot(\phi + \alpha)\csc(\phi + \alpha) \\~\\
+      \frac{\partial x_c}{\partial \beta} = & y\cdot\sec^2\beta\sec\gamma\csc(\phi + \alpha) \\~\\
+      \frac{\partial x_c}{\partial \gamma} = & y\cdot \tan\beta\tan\gamma\sec\gamma\csc(\phi + \alpha)
+    \end{array}
+  \end{equation*} \\
+
+How did in Equation \ref{app:eq:triang_angle}, the triangulation angle is computed as:
+  \begin{equation*}
+    \begin{matrix}
+      \beta_i = \arctan\left( \frac{x_{s_i}}{f} \right)
+      \qquad \qquad
+  	  \sigma_{\beta_i} = \sqrt{
+  	      \left( \frac{\partial \beta_i}{\partial y_{s_i}} \right)^2 \sigma_{y_{s_i}}^2
+  	      + \left( \frac{\partial \beta_i}{\partial f} \right)^2 \sigma_f^2
+  	  }
+    \end{matrix}
+  \end{equation*} \\
+
+The image plane swing caused by Scheimpflug principle, is given by:
+  \begin{equation}
+    \label{app:eq:sch_x}
+    \begin{matrix}
+      x_{s_i} = 
+        \lambda_1\left( \frac{x_{p_i}}{\cos\chi} + y_{p_i}\tan\upsilon\tan\chi \right) = \\
+        \frac{f}{f - x_{p_i}\tan\chi - y_{p_i}\frac{\tan\upsilon}{\cos\chi}} \left( \frac{x_{p_i}}{\cos\chi} + y_{p_i}\tan\upsilon\tan\chi \right)
+    \end{matrix}
+  \end{equation}
+The error is computed as above:
+  \begin{equation*}
+    \sigma_{x_{s_i}} = \sqrt{
+      \left( \frac{\partial x_{s_i}}{\partial y_{p_i}} \right)^2 \sigma_{y_{p_i}}^2 +
+      \left( \frac{\partial x_{s_i}}{\partial x_{p_i}} \right)^2 \sigma_{x_{p_i}}^2 +
+      \left( \frac{\partial x_{s_i}}{\partial \upsilon} \right)^2 \sigma_\upsilon^2 +
+      \left( \frac{\partial x_{s_i}}{\partial \chi} \right)^2 \sigma_\chi^2 +
+      \left( \frac{\partial x_{s_i}}{\partial f} \right)^2 \sigma_f^2
+    }
+  \end{equation*} \\
+
+How in Equations \ref{app:eq:sensor_to_camera_distortion} and \ref{app:eq:sensor_to_camera_center}, the transformation from sensor coordinates to undistorted image plane coordinates, is computed as:
+\begin{equation}
+  \begin{matrix}
+    \label{app:eq:camera_to_image_x}
+    x_{p_i} = x_{p_i}^d (1 + k_1r^2) \qquad \qquad
+    x_{p_i}^d = d_x'(x_{c_i} - c_x)
+  \end{matrix}
+\end{equation}
+the errors of which are:
+  \begin{equation*}
+    \sigma_{x_{p_i}} = \sqrt{
+        \left( \frac{\partial x_{p_i}}{\partial x_{p_i}^d} \right)^2 \sigma_{x_{p_i}^d}^2
+        + \left( \frac{\partial x_{p_i}}{\partial k_1} \right)^2 \sigma_{k_1}^2
+      }
+	  \qquad
+    \sigma_{x_{p_i}^d} = \sqrt{
+      \left( \frac{\partial x_{p_i}^d}{\partial x_{c_i}} \right)^2 \sigma_{x_{c_i}}^2
+      + \left( \frac{\partial x_{p_i}^d}{\partial c_x} \right)^2 \sigma_{c_x}^2
+    }
+  \end{equation*} \\
+
+In this case, we can't perform a sub-pixel approximation, so the laser power distribution along the pixel was modelled as an \textit{uniform distribution} with standard deviation:
+  \begin{equation*}
+    \sigma_{x_{c_i}} = \frac{1}{2\sqrt{3}}
+  \end{equation*} \\
+
+Equations \ref{app:eq:sensor_to_camera_distortion}, \ref{app:eq:sensor_to_camera_center} and \ref{app:eq:camera_to_image_x} was used accordingly with \cite{TsaiTvLenses}, while Equations \ref{app:eq:sch_y} and \ref{app:eq:sch_x} was used accordingly with \cite{SchCameraCalib}.
+
+%--------------------------------------------%
+%--------------------------------------------%
+\section*{Error propagation in diameter evaluation}
+Accordingly with the Erone's formula, the diameter of the circle circumscribed to a triangle (in our case, defined by three rolling points in the rolling circle) is evaluable with the equation:
+  \begin{equation}
+    D = \frac{2\cdot a\cdot b\cdot c}{\sqrt{( a + b + c )( - a + b + c )( a - b + c )( a + b - c )}}
+    \label{app:eq:diam-prop}
+  \end{equation}
+where $a$, $b$ and $c$ are the lengths of the edges of the triangle. \\
+
+Projecting each vertex on a same coordinate reference system $(ZW)$, we can characterize that point with a vector $y_i$, that can be decomposed into its two components $z_i$ and $w_i$ as follows:
+  \begin{equation}
+    \begin{matrix}
+      z_i = y_i \cdot \cos \theta_i + H_i \\
+      w_i = y_i \cdot \sin \theta_i \\
+    \end{matrix}
+    \label{app:eq:components}
+  \end{equation}
+where $\theta_i$ is the triangulation angle and $H_i$ is the offset of the laser projector, with respect to the origin of the coordinate system. At this point, it is simple to compute the edges length as:
+  \begin{equation}
+    \left\{
+    \begin{matrix} 
+      & a = \sqrt{(w_1 + w_2)^2 + (z_1 + z_2)^2} \\
+      & b = \sqrt{(w_2 + w_3)^2 + (z_2 + z_3)^2} \\
+      & c = \sqrt{(w_3 + w_1)^2 + (z_3 + z_1)^2}
+    \end{matrix}
+    \right.
+    \label{app:eq:edges-len}
+  \end{equation}
+Hence, replacing in Equation \ref{app:eq:diam-prop} the results obtained in Equations \ref{app:eq:edges-len} and \ref{app:eq:components}, we can conclude that the error is propagated accordingly with:
+  \begin{equation*}
+    \sigma_D = \sqrt{
+      \sum_{i = 1}^3 \left( \frac{\partial D}{\partial y_i} \sigma_{y_i} \right)^2 + 
+      \sum_{i = 1}^3 \left( \frac{\partial D}{\partial H_i} \sigma_{H_i} \right)^2 + 
+      \sum_{i = 1}^3 \left( \frac{\partial D}{\partial \theta_i} \sigma_{\theta_i} \right)^2
+    }
+  \end{equation*} \\
+
+Because of there exists a linear relation between the reference system $(ZW)$ and the reference systems of each laser-camera pair, it is possible to define each vector $y_i$ as:
+  \begin{equation*}
+    |y_i| = \sqrt{x_w^2 + y_w^2 + z_w^2}
+  \end{equation*}
+where $\left( x_w, y_w, z_w \right)$ are the coordinates evaluated in the two sections above, and with $z_w = 0$, because each point lies on the laser plane. Thus, it is simple to determine $\sigma_{y_i}$ as:
+  \begin{equation*}
+    \sigma_{y_i} = \sqrt{
+      \left( \frac{\partial y_i}{\partial x_w} \sigma_{x_w} \right)^2 + 
+      \left( \frac{\partial y_i}{\partial y_w} \sigma_{y_w} \right)^2
+    }
+    % = \frac{x}{\sqrt{x_w^2 + y_w^2}}
+  \end{equation*}
+where $\sigma_{x_w}$ and $\sigma_{y_w}$ are the value computed with Equations \ref{app:eq:sigma-xw} and \ref{app:eq:sigma-yw}, respectively. \\
+
+Accordingly with the previous model, $\theta_i$ is the triangulation angle evaluated with respect to the $Y$ axis, thus $\sigma_{\theta_i}$ is the same error estimated with Equation \ref{app:eq:sigma-yw}. Vice-versa $H_i$ are a constructive parameters, hence we can set $\sigma_{H_i}$ reasonably, with respect to the requirements of product construction.

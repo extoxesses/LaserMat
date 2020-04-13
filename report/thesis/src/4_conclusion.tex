@@ -1,0 +1,24 @@
+% \addcontentsline{toc}{chapter}{Conclusions}
+\chapter{Conclusions and future works}
+\label{ch:conclusions}
+In this work a complete model for laser triangulation system was presented. As we said, the capability to forecast the behaviour of a measurement system, before testing it under real conditions, is a gain in time and money for a company. Furthermore, this model allows to investigate step by step how each source of error affects the final measure. \\
+
+As we demonstrated, the model provides a good approximation of the reality, limited only by the performance of the background hardware (e.g. by the resolution of the camera). However, it is necessary to pay attention to the fact that:
+  \begin{itemize}
+    \item It is very sensitive to the transformation between reference systems, on which the error is amplified.
+    \item Often, not all input parameters are known, so they must be reasonably estimated. 	
+Nevertheless, their tuning allow to determine some additional constructive constraints, that must be respected to reach the estimated results.
+  \end{itemize}
+  
+Regarding sub-pixel filters, we shown their power in increasing the precision of the laser spot localization. To guarantee this improvement, the used windows have to be comparable with the number of pixels involved by the Gaussian, in each row of the single frame: if the window is too small, the filter is less precise; if it is too big, we risk to consider too much noise.
+Furthermore, we concluded that the smaller the pixel are, the smaller are the advantages introduced by the filters, with a theoretical error reduction only around $50\%$ (with respect to the pixel size), compared with theoretical $90\%$. Finally we observed that all the sub-pixel filters have a different response to the preprocessing of the image frame, which can't be estimated a priori, but only with tests in real scenarios. \\
+Thus, we can conclude that there isn't a filter better than the others: their have different behaviours accordingly with the working condition of the system. The only things we can say about them are that: the \textit{center of mass} is the most sensitive to the noise of the camera, but it is still stable and guarantees good performances in low noisy images. The \textit{Blaise\&Rioux} is the most unstable among the filters, but the one that is less affected by the preprocessing of the image. Last but not least, the \textit{FIR} filter is the best among the filters in heavily noise images, but the worst when the noise decreases. \\
+
+Regarding the measure of the diameter, we can conclude that it is now heavily affected by the error committed evaluating the rolling points, but it strongly depends (at least quadratically) by the distribution of the detected rolling points in the wheel. However, the great number of parameter that simultaneously characterize the measure, prevents to determine a mathematical relations between the error and the parameters themselves. Despite that a (at least local) minimum always exists, and it corresponds qualitatively to the uniform distribution of the points along an arc: the greater the arc is, the smaller is the error.
+
+\subsubsection{Future works}
+The only doubt that still persists at the end of this analysis, concerns the effects of the calibration on the final error. As we have discussed broadly, we didn't found a way to theoretically include the error made during the calibration phase inside our model, but we are quite sure that it has a lot of influence on the final result. 
+
+Another interesting analysis could concern the noise introduced by the laser, e.g. due to the speckle, wavelength and so on. In this case we found some models, but no one general formulation to use among each sub-pixel filter. The only test we performed, suggested us that these errors should be comparable with the outputs of the model.
+
+% infine un confronto tra altri approcci detection del laser potrebbe essere interessante per completare la finestra su questo mondo.

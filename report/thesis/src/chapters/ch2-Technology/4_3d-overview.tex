@@ -1,0 +1,11 @@
+\section{3D computer vision overview}
+The laser-camera triangulation system is not the only way to perform 3D world reconstruction. The most commonly used technologies are:
+\begin{itemize}
+  \item \textsc{Stereo Vision} - The typical stereo vision system is a binocular system, composed by two cameras displaced horizontally, viewing the same scene at two slightly different angles. Thanks to the epipolar geometry it is possible to determine where a specific 3D world point is projected into the 2D planes of the two cameras. After determining these relations, the relative depth information can be obtained in the form of a disparity map, which encodes the differences in horizontal coordinates of corresponding image points. The values in this disparity map are inversely proportional to the scene depth at the corresponding pixel location.
+  
+  \item \textsc{Structured light} - Similarly to \acs{SOL} technology, structured light sensors are made by a camera and by a source of light (DLP-projector) that project know patterns, alternating bright and dark. Patterns are deformed because of the shape of the target as with \acs{SOL}, and triangulation is used for the 3D reconstruction. The main benefit of using a DLP-projector rather than a fixed light line is that the projection project the pattern over the whole scene, and mechanical translation or motion required by SOL is not required.
+
+  \item \textsc{Time Of Flight (\acs{TOF})} - This technique is the youngest of the ones proposed. \acs{TOF} sensors estimate distances by measuring the time needed to a signal (light, electromagnetic, acoustic, ...) to reach an obstacle and come back to the sensor. One of the benefits of using this technique is the independence of the calculated distances for each pixel, allowing very high accuracy, but this type of sensors are very delicate and require a lot of handling. \acs{LIDAR} (Light Detection And Ranging) is the first example of \acs{TOF} technology.
+  
+\end{itemize}
+Typically these names are also used to refer to sensors that exploit the specific technology.

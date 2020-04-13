@@ -1,0 +1,43 @@
+\section{Problem definition}
+Designing a new product is a very delicate process in which we have to consider all the details of interest. The purpose of this process is to maximise the final result. The greater is the product complexity, the more this process is tricky. In the case of study, a \acs{WPMS} is rated as good if the measures made with it are close enough to the real ones. A question rises: what does ``close enough'' mean? \\
+
+As described in Chapter \ref{ch:technology}, a \acs{SOL} system is made up of many components: cameras, sensors, lenses, laser projectors, laser-camera reciprocal positions, etc. All of these components are sources of noise. Accurately control these sources, allows to significantly increase the accuracy of the output measurement. Unfortunately this is not only a problem of noise. When we design a new system we decide how to put the elements, how to link them and which positions are the best to reach our goal, but when too many elements are taken into account at the same time, it is very difficult to estimate the effect of each single choice on the final result. When there are no models or virtual system that allow to simulate this chain of effects, the only way to evaluate the quality of the system is to build and to try it on real situation or in laboratory, with a waste of time and money in the case the system doesn't reach given requirements. Time and money are two fundamental aspects in a company, specially when products have to be customized on customer needs, or when a new product have to be designed within a deadline. \\
+
+By combining what has just been said with \acs{WPMS}s description in Chapter \ref{ch:sys_cmp}, both from the point of view of hardware and software, we can summarize the sources of noise/error for the acquisition of images and measurement, as follows:
+  \begin{itemize}
+    \item Environment
+      \begin{itemize}
+        \item Working tolerances
+        \item Temperature range
+        \item Installation
+        \item Vibration/Shock
+        \item External light conditions
+        \item Dirty and wet condition on the target (wheel surface)
+      \end{itemize}
+      %
+    \item Not ideal of the model
+      \begin{itemize}
+        \item Wheel yaw and camber
+        \item Laser spot shape (discussed in Subsection \ref{subsec:lenses})
+        \item Lenses (discussed in Subsection \ref{subsec:peak-detection})
+      \end{itemize}
+      %
+    \item Images acquisition process
+      \begin{itemize}
+        \item Laser plane
+        \item System calibration and geometrical parameters evaluation
+        \item Profile extraction
+      \end{itemize}
+      %
+    \item Data processing
+      \begin{itemize}
+        \item Point cloud interpolation
+        \item Keypoints detection
+        \item Measures evaluation and error propagation (Summaries and differences, application of closed formulas, \ldots)
+      \end{itemize}
+  \end{itemize}
+
+
+The model proposed in this chapter aims to evaluate the error made determining a 3D point in the world, starting from the detection of its projection in the image. The model tries to consider all the elements described in Chapter \ref{ch:technology}, organizing them accordingly to the \acs{SOL} systems geometry. In particular, we will focus on the problem of sub-pixel point extraction. In the end, we will try to improve the model, considering the calibration problem and including the corrections due to the non-ideality of the image acquisition. \\
+
+In Appendix \ref{ap:model} we summarized the proposed model, with particular attention to the notation and to the simplicity of comprehension. In Appendix \ref{ap:nomen} we added a table with all the definition of interests for this chapter.

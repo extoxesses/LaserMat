@@ -1,0 +1,40 @@
+\begin{table}[t!]
+  \centering
+  \begin{tabular}{|ccc|}
+
+  \hline
+  \textbf{Estimator}          & \textbf{Window} & \textbf{Local Estimator} \\
+  \hline
+  & & \\
+  \textit{Gaussian}           & 3               &  $\delta$                \\ 
+  & & \\ % \hline
+  \textit{Linear}             & 3               & $\frac{\delta}{\sigma^2} \frac{e^{-\frac{1}{2\sigma^2}}}{1 - \left( 1 - \frac{\delta}{\sigma^2} \right) e^{-\frac{1}{2\sigma^2}}}$ \\ 
+  & & \\ % \hline
+  \textit{Parabolic}          & 3               & $\frac{\delta}{2\sigma^2} \frac{e^{-\frac{1}{2\sigma^2}}}{1-e^{-\frac{1}{2\sigma^2}}}$ \\ 
+  & & \\ % \hline
+  \textit{Center of Mass}     & 3               & $ \frac{2\delta}{\sigma^2} \frac{ e^{-\frac{1}{2\sigma^2}} }
+                                                                         {  1+2e^{-\frac{1}{2\sigma^2}} }$ \\ 
+  & & \\ % \hline
+  \textit{Center of Mass}     & 5               & $ \frac{2\delta}{\sigma^2} \frac{ e^{-\frac{1}{2\sigma^2}} + 4e^{-\frac{4}{2\sigma^2}} }
+                                                                         {1 + 2e^{-\frac{1}{2\sigma^2}} + 2e^{-\frac{4}{2\sigma^2}} }$ \\ 
+  & & \\ % \hline
+  \textit{Center of Mass}     & 7               & $\frac{2\delta}{\sigma^2} \frac{ e^{-\frac{1}{2\sigma^2}} + 4e^{-\frac{4}{2\sigma^2}} + 9e^{-\frac{9}{2\sigma^2}} }
+                                                                        { 1 + 2e^{-\frac{1}{2\sigma^2}} + 2e^{-\frac{4}{2\sigma^2}} + 2e^{-\frac{9}{2\sigma^2}} }$ \\ 
+  & & \\ % \hline
+  \textit{Blais-Rioux}        & 4               &  $ -\frac{2\delta}{\sigma^2} \frac{ e^{-\frac{1}{2\sigma^2}} + 2e^{-\frac{1}{2\sigma^2}}}
+  { -\frac{2\delta}{\sigma^2}e^{-\frac{1}{2\sigma^2}} - \frac{4\delta}{\sigma^2}e^{-\frac{4}{2\sigma^2}} 
+    - f(\delta, \sigma)
+  }$ \\
+  \multicolumn{3}{|c|}{ $f(\delta, \sigma) =
+      \left(1-\frac{\delta}{\sigma^2}\right)e^{-\frac{1}{2\sigma^2}}
+      + 1
+      - \left( 1+\frac{2\delta}{\sigma^2} \right)e^{-\frac{4}{2\sigma^2}}
+      - \left( 1+\frac{3\delta}{\sigma^2} \right)e^{-\frac{9}{2\sigma^2}}
+  $ } \\
+  & & \\ 
+  \hline
+  \end{tabular}
+  
+  \caption{Table of local estimators $\hat{\delta}$, estimated for some of the proposed filters}
+  \label{tab:local-mod}
+\end{table}

@@ -1,0 +1,73 @@
+\section{An alternative approach}
+
+To complete our analysis, we thought to seek alternative models to compare with the ones described above. Our idea was to consider different approaches to see if they lead to same results. After some research we found a new process, discussed in \cite{7520324}, that proposed a linear proceedings to determine the error. \\
+% During the analysis discussed above, we encountered some problems: few of them were caused by misunderstandings of parts of the model itself, some others by calculation or implementation errors. All these errors prevented us to reach meaningful result during the test phase. Thus, we decided to look for alternative solutions in order to place them side by side with our model and, if possible, to correct it and compare final results. After some research we found a new process, discussed in \cite{7520324}, and proposed to fully understand the propagation error in laser triangulation-based systems. \\
+
+This new model is based on \cite{576335}, that proposed a way to propagate approximately additive random perturbations through vision algorithms in which the appropriate random perturbation model for the estimated quantity (produced by the vision step) is also an additive random perturbation. We have considered this aspect very interesting because if we are able to find a linear description $f(\nu, \theta)$ of our problem, we can theoretically evaluate the error propagation over the experimental parameters $\hat{\theta}$ when they are not derived by an experimental observation of the noise $\nu$, but through a minimization such as:
+  \begin{equation*}
+    \hat{\theta} = argmin_{\theta} \, f(\nu, \theta)
+  \end{equation*}
+In this case, the propagation error we are interested in, is given by the covariance matrix $\Sigma_{\hat{\theta}}$ of each parameter involved by the system. A general for of this matrix is given by:
+  \begin{equation*}
+    \Sigma_{\hat{\theta}} =
+      \left( \frac{\partial g}{\partial \theta} \right)^{-1}
+      \frac{\partial g}{\partial \nu}^T
+      \Sigma_\nu
+      \frac{\partial g}{\partial \nu}
+      \left(\left( \frac{\partial g}{\partial \theta} \right)^{-1}\right)^T
+  \end{equation*}
+where $\Sigma_\nu$ is the covariance matrix of the observed noise. To make a complete and robust description of the problem, we have to build this last matrix properly.
+
+From a geometrical point of view, a 3D point in the world reference system must satisfy both the camera perspective projection model (Equation \ref{eq:perspective_projection}) as well as the laser plane equation $x^T\boldsymbol{n} = d$, where $\boldsymbol{n}$ is the plane normal vector, and $d = 0$ accordingly with the coplanar version of Tsai \cite{TsaiTvLenses}. This allows to build a system of equation, described by: 
+  \begin{equation}
+    \begin{bmatrix}
+      \boldsymbol{r}^T - \boldsymbol{v}^T \frac{(x_p - c_x)}{f_x} \\
+      \boldsymbol{u}^T - \boldsymbol{v}^T \frac{(y_p - c_y)}{f_y} \\
+      \boldsymbol{n}^T
+    \end{bmatrix}
+    \begin{bmatrix}
+      x_w \\ y_w \\ z_w
+    \end{bmatrix}
+    =
+    \begin{bmatrix}
+      \frac{(x_p - c_x)}{f_x} t_3 - t_1 \\
+      \frac{(y_p - c_y)}{f_y} t_2 - t_1 \\
+      d
+    \end{bmatrix}
+    \label{eq:app2-model}
+  \end{equation}
+The vectors $\boldsymbol{r}$, $\boldsymbol{u}$ and $\boldsymbol{v}$ are the row vectors of the rotation matrix $R^T = \begin{bmatrix} \boldsymbol{r} & \boldsymbol{u} & \boldsymbol{v} \end{bmatrix}$, while $t_i$ is the element of the translation vector $T^T = \begin{bmatrix} t_1 & t_2 & t_3 \end{bmatrix}$. We can rewrite the system of equation as:
+  \begin{equation*}
+    A\boldsymbol{x} = \boldsymbol{b}
+  \end{equation*}
+and we obtain a linear equation that can be used to determine $\hat{\theta}$. Furthermore, if we perturb this last equation, we obtain something like:
+  \begin{equation*}
+    (\boldsymbol{x} + \delta \boldsymbol{x}) = (A + \delta A)^{-1}(\boldsymbol{b} + \delta \boldsymbol{b})
+  \end{equation*}
+At this point it is simple to identify all the parameters from Equation \ref{eq:app2-model} that are included in $\Sigma_{\nu}$. \\
+
+To simplify the determination of significant factor, the authors suggest to group the parameters of interest in a few set:
+  \begin{enumerate}
+    \item \textit{Camera Intrinsic Calibration Uncertainty} \\
+    We have already discussed extensively in the Section \ref{sec:calib-model} the issues that arise when we try to consider the propagation error in the calibration phase. The same conclusions are still valid in this case.
+    
+  \item \textit{Positioning Uncertainty} \\
+  In this set are grouped both the position of the camera as well as the one of the laser. Concerning the position of the camera, we can consider its position deviations as negligible. From our point of view, if we move camera with respect of its ideal position, we will see some changes about its \acs{DOF} or resolution, that can be fixed by correcting lens focus, but not a substantial degradation of the ability to correctly detect the sub-pixel position of the laser spot.  \\
+  About the laser, instead, we are strongly interested in determining as precisely as possible its pitch and roll rotations. If on the one hand laser rotations could be manufacture errors, on the other many system like \acs{WPMS}s acquire the laser when the target is not perpendicular to the laser itself. Thus, it is of primary importance to be able to determine the right laser orientation. In \cite{7520324} the authors proposed to use the rotation matrix \ref{eq:second-app-laser-rot} to determine the error in laser positioning.
+  \begin{equation}
+      \begin{bmatrix}
+          \sin(e_\theta)\cos(e_\phi) \\ \sin(e_\theta)\sin(e_\phi) \\ \cos(e_\theta)
+      \end{bmatrix}
+      \label{eq:second-app-laser-rot}
+   \end{equation}
+    
+    \item \textit{Laser detection} \\
+    Following the idea as the one used in our model, it is natural to underline that errors of interest are the ones made by determining the position of the spot laser at sub-pixel accuracy, i.e. $\sigma_{x}$ and $\sigma_{y}$ (with $x$ and $y$ taken accordingly to the laser reference system), and $Cov_{xy}$ for the spot, under the hypothesis that the two coordinates are i.i.d. random variables. \\
+    However, accordingly with \cite{7520324}, this seems not to be correct. In fact the authors suggest to perform some test on a known system, and to use the variations of the spot position between couples of acquisitions to make a statistics on the committed errors.
+    
+    \item \textit{Lens distortions and the point discretization} \\
+    As we done in the previous model, also in this case we considered the contributions due by lens distortions and the point discretization on the 2D sensor plane. To do that, we consider the same analysis done in the Sections \ref{sec:model-lens-distortion} and \ref{sec:laser-peaks}.
+  \end{enumerate}
+
+Once all the parameters of interest have been defined, we tried to build the covariance matrix $\Sigma_\nu$: removing all the parameters that we considered negligible, we obtained a $6\times6$ matrix. We notice that many dependency relationships were not trivial to determine, sometimes because we couldn't understand what type of relations existed between the couple of parameters. Furthermore, the conclusion reached talking about laser detection (point 3 of the list above) does not convince us. Our goal is to develop a mathematical model that can be used without any information on the performance of a possible real system: the necessity to make an error statistic using real data is out of our requirements. \\
+All these difficulties in creating the matrix $\Sigma_\nu$, and the bad results obtained using this second model, discouraged us to continue along this way.

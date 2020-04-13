@@ -1,0 +1,53 @@
+\newpage
+\section{Prove di Giovedì 30-03-2017}
+
+\subsection{Appunti Sistema di triangolazione}
+\begin{itemize}
+  \item Distanza laser-telecamera	441 mm
+  \item Focale				 35 mm		(shutter 5.6 - 60 cm)
+  \item Distanza pannello-sistema	152 cm (questo non fa testo, valgono le misure sotto)
+  \item Dimensione pixel telecamera	  8 micron
+  \item Pixel telecamera		1710x1696
+  
+  \item I due angoli che seguono sono misurati rispetto la parallela al laser
+  \item Angolo telecamera min $6^\circ$
+  \item Angolo telecamera max $26^\circ$
+\end{itemize}
+Le prime due acquisizioni sono state fatte un po' a caso, giusto per avere un riferimento.
+
+\subsection{esperimento 1}
+Configurazione:
+\begin{itemize}
+  \item Angolo $22^\circ$
+  \item Messa a fuoco		1011 mm
+  \item Distanza inizio corsa	 689 mm		Risoluzione 29mm / 175px = 0.165mm (0.181mm)
+  \item Distanza centro corsa	1042 mm		Risoluzione 29mm / 121px = 0.239mm (0.269mm)
+  \item Distanza fine corsa	1716 mm		Risoluzione 29mm /  77px = 0.376mm (0.392mm)
+\end{itemize}
+Questo esperimento è sbagliato, perché sono sbagliati i riferimenti presi in considerazione per il calcolo delle distanze. \textbf{Il triangolo da considerare è il seguente:}
+\begin{itemize}
+  \item La base è la distanza laser-telecamera
+  \item L'altezza è la distanza laser-target $d_{LC} \cdot tan(\alpha)$ $\leftarrow$ nel file excel è indicata come ``distanza dal target''
+  \item L'ipotenusa è la distanza camera-target $\leftarrow$ nel file excel è indicata come ``distanza di lavoro''
+\end{itemize}
+
+\subsection{esperimento 2}
+Configurazione:
+\begin{itemize}
+  \item Angolo			 $90-22^\circ$
+  \item Messa a fuoco		1139mm (misurato centralmente rispetto la sensore della camera, e non dalla sua origine reale)
+  \item Distanza inizio corsa	820 mm presa a 707mm teorica, 770 reale		Risoluzione 29mm / 
+  \item Distanza centro corsa	1220 mm		Risoluzione 29mm / 
+  \item Distanza fine corsa	 mm		Risoluzione 29mm / 
+\end{itemize}
+Esperimento non finito per ricorrezione del sistema e aumento delle distanze... Mo rifaccio tutto con il nuovo set del sistema, e in questo modo dovrebbe andare tutto tutto
+
+\subsection{esperimento 3}
+Configurazione:
+\begin{itemize}
+  \item Angolo			 $90-20^\circ$
+  \item Messa a fuoco		1027mm (misurato centralmente rispetto la sensore della camera, e non dalla sua origine reale)
+  \item Distanza inizio corsa	790mm presa a 638 mm teorica, 755mm reale	Risoluzione 29mm / 
+  \item Distanza centro corsa	1085mm						Risoluzione 29mm / 
+  \item Distanza fine corsa	2190mm presa a 1847mm teorica, 1850mm reale	Risoluzione 29mm / 
+\end{itemize}

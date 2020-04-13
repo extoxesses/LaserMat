@@ -1,0 +1,34 @@
+\section{The camera calibration problem}
+\label{sec:teo-calibration}
+The \textit{geometric camera calibration} is a process that allows to determine all the parameters introduced with the Equation \ref{eq:perspective_projection}. When we calibrate a single camera, we are determining only its intrinsic parameters, instead if we calibrate a couple of cameras (or, as in this case, a laser-camera pair) we are able to locate the points in the 3D space, and we can determine the extrinsic parameters of the equation. Accordingly with what we said in Subsection \ref{subsec:lenses}, lens distortions are critic when we need to reconstruct the 3D world from an image, so they have to be considered by calibration algorithms that, generally, implement non-linear optimization methods (note that the general model for lens distortions is non-linear). Furthermore, some algorithms (such as \cite{SchCameraCalib} and \cite{hamrouni2012new}) try to consider the distortion due to the lens tilt caused by, in turn, the use of the Scheimpflug principle. \\
+
+In literature there is a multitude of calibration algorithms, most developed for stereocamera systems. In this subsection we briefly introduced two algorithms that can be used to calibrate laser triangulation systems, proposed by Tsai \cite{TsaiTvLenses} (the pioneer of camera calibration algorithms) and Zhang \cite{Zhang-calib}. Both the algorithms are based on the pinhole projective model, described in Equation \ref{eq:perspective_projection}, and take in input a grid of points, both in image and world reference systems, and give in output the camera parameters. As we can understand, the origin of the world reference system could be arbitrary, but the system must be consistent with the world.
+
+The choice of to use these algorithms was done by their interest in our filed of study and by the availability of data to compare. However, the use of non-linear optimizations made it difficult to estimate some parameters of interest for the next analysis.
+
+\subsubsection{Tsai}
+Roger Tsai proposed its algorithm in 1987 in order to improve the already existing algorithms, that lacked of many informations, such as lens distortions. Thus, he introduced a two-step process: in the first step he evaluated the intrinsic parameters starting from the grid took in input; in the second step he applied a non-linear optimization to correctly evaluate intrinsic parameters, with particular attention with focal length and lens distortions. As shown in his article, he developed a very accurate, fast and versatile algorithm to calibrate cameras. Furthermore, one of the advantages of this technique is the ability to calibrate using a single planar view of the reference target. \\
+
+As we can read in the Reg Wilson's FAQ\footnote{\url{http://www.ius.cs.cmu.edu/IUS/usrp2/rgw/www/faq.txt}, no longer available now.} we have to be cautious when we set Tsai parameters. First of all, it assumes that some nominal values, such as pixel sizes, sensor size and frame grabber are correct. In this way he simplifies some passages of the algorithm. Second we have to pay attention on the choice of the world reference system: if we consider the coplanar procedure, the origin of our coordinate reference system must to be far from the center of the sensor, otherwise the algorithm could be not work. \\
+Both in coplanar and non-coplanar procedure, the input grid must have at least $11$ point to calibrate correctly. Furthermore, the points have to be taken broadly across the \acs{FOV} to let the non-linear optimization work properly. \\
+
+Note that, in order to separate the effects of $f$ and $T_z$ on the image, there needs to be perspective distortion effects in the calibration data. For useable perspective distortion, the distance between the calibration points nearest and farthest from the camera should be on the same scale as the distance between the calibration points and the camera. This applies both to coplanar and non-coplanar calibration:
+
+For co-planar calibration the worst situation is to have the 3D points lied in a plane parallel to the camera's image plane (all points at   equal distance away). Simple geometry tells us we can't separate the effects of $f$ and $T_z$. A relative angle of $30$ degrees or more is recommended to give some effective depth to the data points.
+
+For non-coplanar calibration the worst case is to have the 3D points lied in a volume of space that is relatively small compared to the volume's distance to the camera. From a distance the image formation process is closer to orthographic (not perspective) projection and the calibration problem becomes poorly conditioned.
+
+
+\subsubsection{Zhang}
+Zhang developed an hybrid process that combines self-calibration (a grid similar to that of Tsai) and traditional calibration techniques (match between the same point in different images), which enables the linear estimation of all intrinsic parameters. To do that at least three images of a well known planar pattern (or reasonably considered such) are needed, taken in different positions. The motion of the pattern should not necessarily be known. The steps needed to calibrate the system are the following, to:
+  \begin{enumerate}
+    \item Print a pattern and attach it to a planar surface.
+    \item Take a few images of the model plane under different orientations by moving either the plane or the camera. In the scenarios we are interested in, we will move the pattern keeping fixed the camera.
+    \item Detect the feature points in the images.
+    \item Estimate the five intrinsic parameters and all the extrinsic parameters using the closed-form solution.
+    \item Refine all parameters, including lens distortion parameters.
+  \end{enumerate}
+Unlike Tsai, Zhang tries to estimate the lens distortions until the fourth degree. As the author admitted in the original paper, his algorithm could degenerate if the pattern took in the different frames, lies in parallel planes.
+
+\bigskip
+Now we can understand the importance of planar calibration algorithm in laser-based triangulation systems: the laser forms a flat plane in the 3D world reference system. All points we will acquire lie on this plane. From this point of view, Tsai is preferable with respect to Zhang, because it used a single view of scene, taken on the laser plane. Note that if we use a known pattern (i.e. a checkboard), we must be sure that the pattern lies on the laser plane, otherwise the map that obtained will be incorrect.

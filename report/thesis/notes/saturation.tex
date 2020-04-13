@@ -1,0 +1,115 @@
+\newpage
+
+\section*{Modello Gaussiano affetto da rumore\\Analisi matematica dell'errore di approssimazione}
+
+Consideriamo un segnale \textit{Gaussiano}
+\begin{equation}
+f(n) = e^{-\frac{(n-\delta)^2}{2\sigma^2}}+\frac{\beta}{A}
+\end{equation}
+con
+\begin{itemize}
+  \item $n$ posizione del pixel rispetto a quello centrale (centrato per comodità di notazione su $n=0$)
+  \item $\delta$ indica l'offset del picco rispetto al pixel $n=0$
+  \item $\sigma$ è l'apertura del laser
+  \item $\beta$ è l'ampiezza del rumore
+  \item $A$ è l'apertura del rumore
+\end{itemize}
+Inoltre, è possibile considerare con un certo errore di approssimazione (vedi studio sul resto di Lagrange per l'errore di approssimazione) l'approssimazione di Taylor del primo ordine
+\begin{equation*}
+f(n) \approx \left( 1+\frac{n\delta}{\sigma^2} \right) \cdot e^{-\frac{n^2}{2\sigma^2}}
+\end{equation*}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection*{CoM5}
+Il \textit{modello del centro di massa} si definisce come
+\begin{equation*}
+CoM_5 = \frac{-2a-b+d+2e}{a+b+c+d+e}
+\end{equation*}
+con
+\begin{equation*}
+  a=f(-2) \ \ \ b=f(-1) \ \ \ c=f(0) \ \ \ d=f(1) \ \ \ e=f(2)
+\end{equation*}
+Sviluppando l'equazione avremo:
+\begin{equation}
+  CoM_5 \approx \frac{2\delta}{\sigma^2} \cdot \frac{
+    e^{-\frac{1}{2\sigma^2}}+4e^{-\frac{4}{2\sigma^2}}
+  }{
+    1+2e^{-\frac{1}{2\sigma^2}}+2e^{-\frac{4}{2\sigma^2}} + \frac{5\beta}{A}
+  }
+\end{equation}
+Quello che si può vedere è che si ottiene un risultato più rumoroso a causa dell'addendo a denominatore. Tuttavia questa approssimazione non credo sia corretta a causa del fatto che stiamo conservando l'informazione sulla Gaussiana di base, cosa che invece non è vera, in quanto perché il modello sia corretto dovrebbe avere un magnitudo molto inferiore rispetto a quello del rumore (per avere saturazione). \\
+
+Per ovviare a questo problema, io utilizzerei una funzione a gradino per il rumore, del tipo
+\begin{equation*}
+  \mathcal{N} = \left\{
+    \begin{matrix}
+      \frac{\beta}{A} \ per \ |n| < \frac{A}{2}\\ 
+      0 \ altrimenti
+    \end{matrix}
+  \right.
+\end{equation*}
+In questo modo è possibile introdurre una funzione che in parte conserva l'informazione sulla distribuzione gaussiana, e dall'altra permette avere una saturazione. Applicando tale segnale si ha che:
+\begin{equation}
+  CoM_5 \approx
+  \frac{
+    -2e^{-\frac{(\delta-2)}{2\sigma^2}} - \frac{\beta}{A} + \frac{\beta}{A} + 2e^{-\frac{(\delta-2)}{2\sigma^2}}
+  }{
+    e^{-\frac{(\delta-2)}{2\sigma^2}} + \frac{3\beta}{A} + e^{-\frac{(\delta+2)}{2\sigma^2}}
+  } \approx
+  \frac{8\delta}{\sigma^2} \cdot \frac{
+    e^{-\frac{4}{2\sigma^2}}
+  }{
+    2e^{-\frac{4}{2\sigma^2}} + \frac{3\beta}{A}
+  }
+\end{equation}
+In questo modo posso assumere che la saturazione sia dovuta ad un rumore rettangolare che si somma alla funzione originale, della quale conservo solo le code. Posti
+\begin{itemize}
+  \item $\sigma^2 = 1$
+  \item $\beta = 1$ (Visto che finora non anche la gaussiana è stata considerata con gain unitario, stesso faccio per la uniforme)
+  \item $A = 2\sigma$ (anche se in realtà dovrebbe bastare considerarlo come l'apertura di un pixel $[0,1]$ come nel paper)
+\end{itemize}
+l'errore per il $CoM_5$ sarà:
+\begin{equation}
+  |\delta - \hat{\delta}| = 2.67 \cdot |\delta|
+\end{equation}
+
+\noindent
+\textbf{NOTA:} fuori da queste ipotesi non sono riuscito a sviluppare un modello che tenesse in considerazione il $\delta$ inteso come variazione della posizione del centro rispetto al pixel. In questi casi qualsiasi elaborazione mi porta ad avere un risultato valutabile in termini quantitativi solo per via analitica e non matematica.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection*{Blais and Rioux (BR4)}
+Secondo quanto riportato dal paper, possiamo modellare le seguenti funzioni
+\begin{equation*}
+  g_4(n) = f(n-2) + f(n-1) - f(n+1) - f(n+2)
+\end{equation*}
+cui segue la funzione per il calcolo di $\delta$
+\begin{equation*}
+  \delta = \frac{g_4(n)}{g_4(n) - g_4(n+1)}
+\end{equation*}
+Facendo i dovuti calcoli si ha
+\begin{equation}
+\delta \approx \frac{4\delta}{\sigma^2} \cdot \frac{
+    e^{-\frac{4}{2\sigma^2}}
+  }{
+    \frac{2\beta}{A} + 
+    \left(\frac{2\delta}{\sigma^2}-1\right)e^{-\frac{4}{2\sigma^2}} -
+    \left(1+\frac{3\delta}{\sigma^2}\right)e^{-\frac{9}{2\sigma^2}}
+  }
+\end{equation}
+che se vogliamo risolvere con l'approssimazione fantasiosa del passo precedente, viene
+\begin{equation}
+\delta \approx \frac{4\delta}{\sigma^2} \cdot \frac{
+    e^{-\frac{4}{2\sigma^2}}
+  }{
+    \frac{2\beta}{A} -
+    e^{-\frac{4}{2\sigma^2}} -
+    e^{-\frac{9}{2\sigma^2}}
+  }
+\end{equation}
+
+\noindent
+Nelle stesse ipotesi del caso precedente, possiamo calcolare l'errore
+\begin{equation}
+|\delta - \hat{\delta}| = 0,29 \cdot |\delta|
+\end{equation}

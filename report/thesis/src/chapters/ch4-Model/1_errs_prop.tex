@@ -1,0 +1,18 @@
+\section{Introduction to error propagation}
+Before studying the model, we briefly recall some notions on propagation of measurement errors. Accordingly with \cite{book:ivm}, the size is a property of an object that could be expressed by a number and a reference, i.e. it is measurable. Physical size measurement is generally followed by the error estimation associated with it, specially when they are indirect measure. In the general case, given the function $y = f(x)$, we can generalized its error as
+  \begin{equation}
+    \sigma_f = \begin{vmatrix}
+      \frac{df}{dx}
+    \end{vmatrix}_{x = x_0}
+    \sigma_x
+    \label{eq:er_prop_1}
+  \end{equation}
+If $y = f(\bar{x})$, function of $k$ variables, Equation \ref{eq:er_prop_1} can be generalize as:
+  \begin{equation}
+    \sigma_f = \sum_{j = 1}^k \begin{vmatrix}
+      \frac{\partial f}{\partial x_j}
+    \end{vmatrix}_{x = x_0}
+    \sigma_x
+    \label{eq:er_prop_2}
+  \end{equation}
+The propagation of the maximum errors by using the differential, is based on the assumption that infinitesimal variations of the variables are given by the respective errors. If we want to estimate the maximum error for $y$, it is appropriate to sum up all the terms consistently, i.e. taking the partial derivative modules.

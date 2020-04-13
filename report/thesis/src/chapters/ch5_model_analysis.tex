@@ -1,0 +1,24 @@
+\chapter{Model validation and experiments}
+\label{ch:experimets}
+%Verifica del modello tramite acquisizioni in laboratorio
+
+% APPUNTI
+% per verificare il modello, dopo aver tirato fuori l'errore in x e y per ogni punto, ho considerato il fatto che un punto sia in quelle specifiche coordinate come una rv, nella qualle il fatto che il punto sia in quelle due specifiche coordinate è un evento complesso... quindi l'errore complessivo del punto l'ho stimato con la propagazione della varianza $v = v1 + v2 -> std = radq(std1^2 + std2^2)$ \\ poi l'errore nelle misure l'ho stimato come somma dei due errori (propagazione dell'errore lungo differenze) \\ L'idea sarebbe quella di inserire dentro allo stesso modo l'errore sullo speckle si mi dicono che la cosa può avere senso...
+
+\textit{In this chapter we will present the tests performed to understand the effects of subpixel filters in laser peaks detection, and how detected points affect the target final measures. All tests were performed in safety and controlled conditions, using the same industrial lasers that are mounted in the commercial systems. The technology used is entirely produced within the company, thus many information regarding cameras, lasers and measurement systems, will be omitted. For the same reason, only a small part of the scripts we have implemented is available as open source under BSD license \footnote{\url{https://github.com/extoxesses/LaserMat}}.}
+
+% Preliminary phases
+  \input{./src/chapters/ch5-Analysis/preliminary.tex}
+% Fist experiments
+  \input{./src/chapters/ch5-Analysis/exp1.tex}
+% Validation on industrial systems
+  \input{./src/chapters/ch5-Analysis/exp2.tex}
+% Validation of the model
+  \input{./src/chapters/ch5-Analysis/exp3.tex}
+% Noise effects
+  \input{./src/chapters/ch5-Analysis/noise.tex}  
+
+%\textbf{COSE CHE HO VOLUTAMENTE LASCIATO INDIETRO}
+%\begin{itemize}
+%  \item Test sulla lente, che ha dimostrato che aveva qualche problema, perché il calibro mi veniva sinusoidale anziché parabolico
+%\end{itemize}
