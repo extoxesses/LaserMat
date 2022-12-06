@@ -5,7 +5,7 @@ This collection of methods was used during the master thesis in computer enginee
 
 Badan, A. (2017). *Measurement system for profile and diameter of railway wheels. Estimate of an accuracy of laser-camera triangulation sensors*
 
-__ATTENTION__: this repository is no longer mantained. Missing images and library components have been lost. I'm sorry for the inconvinient.
+> __ATTENTION__: this repository is no longer mantained. Missing images and library components have been lost. I'm sorry for the inconvinient.
 
 ### Main packages
 | Package | Description |
@@ -42,9 +42,6 @@ plot(filtered_laser(:,1), filtered_laser(:,2), '.r');
 ### Installation
 To use this library is sufficient to add to the enviroment path the directories containing the library. Look at the [MatLab documentation] for more information.
 Otherwise, you can use the `addAll.m` script to add all packages.
-
-### Maitainer
-For any questions or needed write to extoxesses@gmail.com
 
 [Tsai]: http://www.dca.fee.unicamp.br/~clesio/ia867/referencias_e_notas_aula/CC_TSAI_87.pdf
 [MatLab documentation]: https://it.mathworks.com/help/matlab/ref/addpath.html
